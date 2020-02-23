@@ -10,26 +10,42 @@ import SwiftUI
 import Combine
 
 struct GolfView: View {
+    //他のViewとの共有変数[toto]
     @EnvironmentObject var toto: ViewModel
+    
+    //レートの選択肢
     @State var rate = [10,50,100,300,500,1000]
+    
+    //初期設定レート
     @State var smallRate  = 2
     @State var largeRate = 4
+    
+    //小丸のポイントを格納する変数
     @State var small_member1 = ""
     @State var small_member2 = ""
     @State var small_member3 = ""
     @State var small_member4 = ""
+    
+    //大丸のポイントを格納する変数
     @State var large_member1 = ""
     @State var large_member2 = ""
     @State var large_member3 = ""
     @State var large_member4 = ""
+    
+    //計算間違いを検算する為の変数
     @State var small_difference = 0
     @State var large_difference = 0
     
     var body: some View {
         ZStack {
+            //画面上部の隅まで表示する
             Color.white
                 .edgesIgnoringSafeArea(.all)
+            
             VStack{
+                /*--------------------------------
+                小丸のレートの変数[smallRate]
+                --------------------------------*/
                 HStack{
                     Text("Small Rate")
                         .font(.body)
@@ -43,6 +59,9 @@ struct GolfView: View {
                 .frame(width: 350.0)
                 .offset(CGSize(width: 0, height: -150))
                 
+                /*--------------------------------
+                大丸のレートの変数[largeRate]
+                --------------------------------*/
                 HStack {
                     Text("Large Rate")
                         .font(.body)
@@ -56,6 +75,9 @@ struct GolfView: View {
                 .frame(width: 350.0)
                 .offset(CGSize(width: 0, height: -150))
                 
+                /*--------------------------------
+                タイトル
+                --------------------------------*/
                 Text("golf")
                     .font(.title)
                     .fontWeight(.heavy)
@@ -64,6 +86,9 @@ struct GolfView: View {
                     .font(.body)
                     .offset(CGSize(width: 0, height: -100))
                 
+                /*--------------------------------
+                ポイント検算用
+                --------------------------------*/
                 HStack {
                     Spacer()
                     if(small_difference != 0){
@@ -79,6 +104,9 @@ struct GolfView: View {
                 .offset(CGSize(width: 0, height: -80))
                 .foregroundColor(.red)
                 
+                /*--------------------------------
+                メンバー表示
+                --------------------------------*/
                 HStack {
                     Text(toto.memberList[toto.member1])
                         .foregroundColor(.purple)
@@ -97,6 +125,10 @@ struct GolfView: View {
                 .offset(CGSize(width: 0, height: -50))
                 .multilineTextAlignment(.center)
                 
+                /*---------------------------------------------------------
+                小丸のポイント格納[small_member1〜4]
+                入力と同時に検算結果を表示する
+                ---------------------------------------------------------*/
                 HStack{
                     Spacer(minLength: 10)
                     TextField("small", text: $small_member1, onEditingChanged:{_ in
@@ -123,6 +155,10 @@ struct GolfView: View {
                 .multilineTextAlignment(.trailing)
                 .offset(CGSize(width: 0, height: -50))
                 
+                /*---------------------------------------------------------
+                大丸のポイント格納[large_member1〜4]
+                 入力と同時に検算結果を表示する
+                ----------------------------------------------------------*/
                 HStack{
                     Spacer(minLength: 10)
                     TextField("large", text: $large_member1, onEditingChanged:{_ in
@@ -150,6 +186,9 @@ struct GolfView: View {
                 .offset(CGSize(width: 0, height: -50))
                 .padding(.bottom, 50.0)
                 
+                /*---------------------------------------------------
+                自作関数[calc]で小丸と大丸の合計をして結果を表示する(argは引数)
+                ---------------------------------------------------*/
                 HStack{
                     Spacer(minLength: 10)
                     Text("\(calc(arg1: (Int(small_member1) ?? 0) , arg2: (Int(large_member1) ?? 0)))")
@@ -169,7 +208,6 @@ struct GolfView: View {
                 .font(Font.custom("AppleSDGothicNeo-UltraLight", size: 24.0))
             }
         }
-        .onDisappear(perform:  calculate)
         .textFieldStyle(RoundedBorderTextFieldStyle())
         .keyboardType(.numbersAndPunctuation)
         .gesture(
@@ -178,13 +216,21 @@ struct GolfView: View {
                     UIApplication.shared.closeKeyboard()
             }
         )
+        //画面を離れる時に[toto]共有変数に結果を持たせる
+        .onDisappear(perform:  calculate)
     }
     
+    /*--------------------------------
+    小丸と大丸の合計値を返す
+    --------------------------------*/
     private func calc(arg1: Int, arg2: Int) -> Int{
         let answer = arg1 * rate[smallRate]  + arg2 * rate[largeRate]
         return answer
     }
     
+    /*--------------------------------
+    円への換算
+    --------------------------------*/
     private func calculate() {
         var smallPay = 0
         var largePay = 0
@@ -205,6 +251,9 @@ struct GolfView: View {
         toto.golfPay4 = smallPay + largePay
     }
     
+    /*--------------------------------
+    ４人の合計の検算
+    --------------------------------*/
     private func checkSumSmall() -> Int{
         var sum  = 0
         var sum1 = 0
