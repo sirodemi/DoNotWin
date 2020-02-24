@@ -19,6 +19,7 @@
 		08100E5E23E109CC00542F1A /* MahjangView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08100E5923E109CC00542F1A /* MahjangView.swift */; };
 		08100E5F23E109CC00542F1A /* GolfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08100E5A23E109CC00542F1A /* GolfView.swift */; };
 		08100E6123E109DF00542F1A /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08100E6023E109DF00542F1A /* TopView.swift */; };
+		D1B39230240366B800ABDEC3 /* GolfView_2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B3922F240366B800ABDEC3 /* GolfView_2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		08100E5923E109CC00542F1A /* MahjangView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MahjangView.swift; sourceTree = "<group>"; };
 		08100E5A23E109CC00542F1A /* GolfView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GolfView.swift; sourceTree = "<group>"; };
 		08100E6023E109DF00542F1A /* TopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
+		D1B3922F240366B800ABDEC3 /* GolfView_2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GolfView_2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 				08100E4423E1097C00542F1A /* SceneDelegate.swift */,
 				08100E4623E1097C00542F1A /* ContentView.swift */,
 				08100E5A23E109CC00542F1A /* GolfView.swift */,
+				D1B3922F240366B800ABDEC3 /* GolfView_2.swift */,
 				08100E5923E109CC00542F1A /* MahjangView.swift */,
 				08100E5623E109CC00542F1A /* MemberView.swift */,
 				08100E5723E109CC00542F1A /* NumberTextField.swift */,
@@ -165,6 +168,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				08100E4323E1097C00542F1A /* AppDelegate.swift in Sources */,
+				D1B39230240366B800ABDEC3 /* GolfView_2.swift in Sources */,
 				08100E4523E1097C00542F1A /* SceneDelegate.swift in Sources */,
 				08100E5B23E109CC00542F1A /* MemberView.swift in Sources */,
 				08100E5D23E109CC00542F1A /* TotalView.swift in Sources */,

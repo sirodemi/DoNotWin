@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import Combine
+//import Combine
 
 struct GolfView: View {
     //他のViewとの共有変数[toto]
@@ -53,8 +53,7 @@ struct GolfView: View {
                 小丸のレートの変数[smallRate]
                 --------------------------------*/
                 HStack{
-                    Text("Small Rate")
-                        .font(.body)
+                    Text("Small Rate").font(.body)
                     Picker("Numbers",selection: $smallRate) {
                         ForEach(0 ..< rate.count) { index in
                             Text("\(self.rate[index])").tag(index)
@@ -216,12 +215,6 @@ struct GolfView: View {
         }
         .textFieldStyle(RoundedBorderTextFieldStyle())
         .keyboardType(.numbersAndPunctuation)
-        .gesture(
-            TapGesture()
-                .onEnded { _ in
-                    UIApplication.shared.closeKeyboard()
-            }
-        )
             
         /*----------------------------------------------------
         画面を離れる時に[toto]共有変数に結果を持たせる
