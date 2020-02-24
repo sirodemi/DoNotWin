@@ -20,13 +20,19 @@ struct GolfView: View {
     @State var smallRate  = 2
     @State var largeRate = 4
     
-    //小丸のポイントを格納する変数
+    //小丸ポイントを格納する変数
     @State var small_member1 = ""
     @State var small_member2 = ""
     @State var small_member3 = ""
     @State var small_member4 = ""
     
-    //大丸のポイントを格納する変数
+    //小丸ポイントを分配した結果を格納する変数
+    @State var small_distribution1 = 0
+    @State var small_distribution2 = 0
+    @State var small_distribution3 = 0
+    @State var small_distribution4 = 0
+    
+    //大丸ポイントを格納する変数
     @State var large_member1 = ""
     @State var large_member2 = ""
     @State var large_member3 = ""
@@ -186,21 +192,21 @@ struct GolfView: View {
                 .offset(CGSize(width: 0, height: -50))
                 .padding(.bottom, 50.0)
                 
-                /*---------------------------------------------------
+                /*-------------------------------------------------------
                 自作関数[calc]で小丸と大丸の合計をして結果を表示する(argは引数)
-                ---------------------------------------------------*/
+                --------------------------------------------------------*/
                 HStack{
                     Spacer(minLength: 10)
-                    Text("\(calc(arg1: (Int(small_member1) ?? 0) , arg2: (Int(large_member1) ?? 0)))")
+                    Text("\(calc(arg1: (small_distribution1), arg2: (Int(large_member1) ?? 0)))")
                         .frame(width:90)
                     Spacer()
-                    Text("\(calc(arg1: (Int(small_member2) ?? 0) , arg2: (Int(large_member2) ?? 0)))")
+                    Text("\(calc(arg1: (small_distribution2), arg2: (Int(large_member2) ?? 0)))")
                         .frame(width:90)
                     Spacer()
-                    Text("\(calc(arg1: (Int(small_member3) ?? 0) , arg2: (Int(large_member3) ?? 0)))")
+                    Text("\(calc(arg1: (small_distribution3), arg2: (Int(large_member3) ?? 0)))")
                         .frame(width:90)
                     Spacer()
-                    Text("\(calc(arg1: (Int(small_member4) ?? 0) , arg2: (Int(large_member4) ?? 0)))")
+                    Text("\(calc(arg1: (small_distribution4), arg2: (Int(large_member4) ?? 0)))")
                         .frame(width:90)
                     Spacer(minLength: 10)
                 }
@@ -216,7 +222,10 @@ struct GolfView: View {
                     UIApplication.shared.closeKeyboard()
             }
         )
-        //画面を離れる時に[toto]共有変数に結果を持たせる
+            
+        /*----------------------------------------------------
+        画面を離れる時に[toto]共有変数に結果を持たせる
+        ----------------------------------------------------*/
         .onDisappear(perform:  calculate)
     }
     
@@ -231,28 +240,29 @@ struct GolfView: View {
     /*--------------------------------
     円への換算
     --------------------------------*/
+
     private func calculate() {
         var smallPay = 0
         var largePay = 0
-        smallPay = ((Int(small_member1) ?? 0) * rate[smallRate] )
+        smallPay = small_distribution1 * rate[smallRate]
         largePay = ((Int(large_member1) ?? 0) * rate[largeRate] )
         toto.golfPay1 = smallPay + largePay
         
-        smallPay = ((Int(small_member2) ?? 0) * rate[smallRate] )
+        smallPay = small_distribution2 * rate[smallRate]
         largePay = ((Int(large_member2) ?? 0) * rate[largeRate] )
         toto.golfPay2 = smallPay + largePay
         
-        smallPay = ((Int(small_member3) ?? 0) * rate[smallRate] )
+        smallPay = small_distribution3 * rate[smallRate]
         largePay = ((Int(large_member3) ?? 0) * rate[largeRate] )
         toto.golfPay3 = smallPay + largePay
         
-        smallPay = ((Int(small_member4) ?? 0) * rate[smallRate] )
+        smallPay = small_distribution4 * rate[smallRate]
         largePay = ((Int(large_member4) ?? 0) * rate[largeRate] )
         toto.golfPay4 = smallPay + largePay
     }
     
     /*--------------------------------
-    ４人の合計の検算
+    小丸の４人の分配の計算
     --------------------------------*/
     private func checkSumSmall() -> Int{
         var sum  = 0
@@ -265,9 +275,16 @@ struct GolfView: View {
         sum3 = (Int(small_member3) ?? 0)
         sum4 = (Int(small_member4) ?? 0)
         sum  = sum1 + sum2 + sum3 + sum4
-        return sum
+        small_distribution1 = sum1 * 4 - sum
+        small_distribution2 = sum2 * 4 - sum
+        small_distribution3 = sum3 * 4 - sum
+        small_distribution4 = sum4 * 4 - sum
+        return 0
     }
     
+    /*--------------------------------
+    大丸の４人の合計の検算
+    --------------------------------*/
     private func checkSumLarge() -> Int{
         var sum  = 0
         var sum1 = 0
